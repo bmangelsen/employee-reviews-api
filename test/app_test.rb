@@ -36,27 +36,17 @@ class AppTest < Minitest::Test
     assert_equal Employee.first.name, info[0]["name"]
   end
 
-  # def test_can_delete_employee
-  #   employee = delete "/delete_employee", name: "Dan"
-  #   assert employee.ok?
-  #   
-  # end
-
-
-  def test_declares_its_name
-    skip
-    response = get "/"
-    assert response.ok?
-    assert_equal "I am Groot", response.body
+  def test_can_delete_employee
+    delete "/delete_employee", name: "Dan"
+    assert_equal 2, Employee.all.count
+    assert Employee.where(name: "Dan").empty?
   end
 
-  def test_it_handles_and_returns_json
-    skip
-    hash = { name: "bob" }
-    response = post("/api/echo", hash.to_json, { "CONTENT_TYPE" => "application/json" })
-
-    assert response.ok?
-    payload = JSON.parse(response.body)
-    assert_equal({ "name" => "bob" }, payload)
+  def test_can_change_employee_name
+    patch "/change_employee_name", name: "Dan", new_name: "Jill"
+    binding.pry
+    assert Employee.where(name: "Dan").empty?
+    assert Employee.where(name: "Jill")
   end
+
 end

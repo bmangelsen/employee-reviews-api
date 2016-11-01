@@ -21,12 +21,13 @@ class App < Sinatra::Base
     Employee.where(name: params["name"]).to_json
   end
 
-  patch "/employee" do
+  delete "/delete_employee" do
+    Employee.where(name: params["name"]).delete_all
   end
 
-  delete "/employee" do
+  patch "/change_employee_name" do
+    Employee.find_by(name: params["name"]).update(name: params["new_name"])
   end
-
 
   run! if app_file == $PROGRAM_NAME
 
