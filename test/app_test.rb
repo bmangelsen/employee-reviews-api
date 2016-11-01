@@ -44,7 +44,6 @@ class AppTest < Minitest::Test
 
   def test_can_change_employee_name
     patch "/change_employee_name", name: "Dan", new_name: "Jill"
-    binding.pry
     assert Employee.where(name: "Dan").empty?
     assert Employee.where(name: "Jill")
   end

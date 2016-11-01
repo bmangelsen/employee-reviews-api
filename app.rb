@@ -13,7 +13,6 @@ class App < Sinatra::Base
   end
 
   get "/all_employees" do
-    "Your employees are:"
     Employee.all.to_json
   end
 
